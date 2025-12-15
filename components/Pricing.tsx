@@ -1,36 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import { Send, Check, Loader2, AlertCircle } from 'lucide-react';
 
 export const Pricing: React.FC = () => {
-  const [formState, setFormState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormState('loading');
-    
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    try {
-      // Endpoint de Formspree actualizado
-      const response = await fetch("https://formspree.io/f/xvgenooy", {
-        method: "POST",
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        setFormState('success');
-        form.reset();
-      } else {
-        setFormState('error');
-      }
-    } catch (error) {
-      setFormState('error');
-    }
-  };
+  const [state, handleSubmit] = useForm("xvgenooy");
 
   return (
     <section id="pricing" className="py-24 bg-slate-50 relative">
@@ -76,7 +49,7 @@ export const Pricing: React.FC = () => {
 
           {/* Form */}
           <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-xl border border-slate-100 sticky top-24">
-            {formState === 'success' ? (
+            {state.succeeded ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-20">
                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
                   <Check size={40} />
@@ -85,12 +58,6 @@ export const Pricing: React.FC = () => {
                 <p className="text-slate-600">
                   Uno de nuestros especialistas en automatización te contactará en menos de 24 horas con tu propuesta personalizada.
                 </p>
-                <button 
-                  onClick={() => setFormState('idle')}
-                  className="mt-8 text-primary-600 font-semibold hover:underline"
-                >
-                  Enviar otra consulta
-                </button>
               </div>
             ) : (
               <>
@@ -104,26 +71,31 @@ export const Pricing: React.FC = () => {
                     <div className="space-y-2">
                       <label htmlFor="nombre" className="text-sm font-semibold text-slate-700">Nombre</label>
                       <input name="nombre" id="nombre" required type="text" placeholder="Tu nombre" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <ValidationError prefix="Nombre" field="nombre" errors={state.errors} className="text-red-500 text-xs" />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="apellido" className="text-sm font-semibold text-slate-700">Apellido</label>
                       <input name="apellido" id="apellido" required type="text" placeholder="Tu apellido" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <ValidationError prefix="Apellido" field="apellido" errors={state.errors} className="text-red-500 text-xs" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="restaurante" className="text-sm font-semibold text-slate-700">Restaurante</label>
                     <input name="restaurante" id="restaurante" required type="text" placeholder="Nombre del local" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                    <ValidationError prefix="Restaurante" field="restaurante" errors={state.errors} className="text-red-500 text-xs" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-2">
                       <label htmlFor="email" className="text-sm font-semibold text-slate-700">Email</label>
                       <input name="email" id="email" required type="email" placeholder="hola@restaurante.com" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs" />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="telefono" className="text-sm font-semibold text-slate-700">Teléfono</label>
                       <input name="telefono" id="telefono" required type="tel" placeholder="+34 600..." className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <ValidationError prefix="Teléfono" field="telefono" errors={state.errors} className="text-red-500 text-xs" />
                     </div>
                   </div>
 
@@ -141,6 +113,7 @@ export const Pricing: React.FC = () => {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                       </div>
                     </div>
+                    <ValidationError prefix="Volumen" field="volumen" errors={state.errors} className="text-red-500 text-xs" />
                   </div>
 
                   <div className="space-y-2">
@@ -157,21 +130,22 @@ export const Pricing: React.FC = () => {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                       </div>
                     </div>
+                    <ValidationError prefix="Gasto" field="gasto" errors={state.errors} className="text-red-500 text-xs" />
                   </div>
 
-                  {formState === 'error' && (
+                  {state.errors && state.errors.length > 0 && (
                     <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm flex items-center gap-2">
                       <AlertCircle size={16} />
-                      Error al enviar. Por favor, verifica tu conexión o configuración.
+                      Hubo un error al enviar el formulario.
                     </div>
                   )}
 
                   <button 
                     type="submit" 
-                    disabled={formState === 'loading'}
+                    disabled={state.submitting}
                     className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transform active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {formState === 'loading' ? (
+                    {state.submitting ? (
                       <>
                         <Loader2 className="animate-spin" size={20} />
                         Enviando...
