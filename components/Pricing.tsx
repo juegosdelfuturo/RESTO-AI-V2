@@ -12,9 +12,8 @@ export const Pricing: React.FC = () => {
     const formData = new FormData(form);
 
     try {
-      // REEMPLAZA "https://formspree.io/f/tu_id_aqui" CON TU URL REAL DE FORMSPREE
-      // Ejemplo: https://formspree.io/f/mqaklzaz
-      const response = await fetch("https://formspree.io/f/tu_id_aqui", {
+      // Endpoint de Formspree actualizado
+      const response = await fetch("https://formspree.io/f/xvgenooy", {
         method: "POST",
         body: formData,
         headers: {
