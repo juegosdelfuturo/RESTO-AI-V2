@@ -43,7 +43,6 @@ export const Navbar: React.FC = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className={linkClass}>Características</a>
-          <a href="#stats" className={linkClass}>Resultados</a>
           <a href="#pricing" className={linkClass}>Precios</a>
           <a 
             href="#pricing"
@@ -66,7 +65,6 @@ export const Navbar: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-100 p-6 flex flex-col gap-4 shadow-xl">
            <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="text-left text-base font-medium text-slate-700 py-2">Características</a>
-          <a href="#stats" onClick={() => setIsMobileMenuOpen(false)} className="text-left text-base font-medium text-slate-700 py-2">Resultados</a>
           <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-left text-base font-medium text-slate-700 py-2">Precios</a>
           <a 
             href="#pricing"

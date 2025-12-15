@@ -35,7 +35,6 @@ export const Footer: React.FC = () => {
               <li><a href="#features" className="hover:text-primary-600">Características</a></li>
               <li><a href="#features" className="hover:text-primary-600">Integraciones</a></li>
               <li><a href="#pricing" className="hover:text-primary-600">Precios</a></li>
-              <li><a href="#stats" className="hover:text-primary-600">Casos de Éxito</a></li>
             </ul>
           </div>
 
