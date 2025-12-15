@@ -61,10 +61,7 @@ export const Stats: React.FC = () => {
 
           {/* Chart Card */}
           <div className="bg-slate-800 rounded-3xl p-6 md:p-8 border border-slate-700 shadow-2xl relative">
-             <div className="absolute -top-6 -right-6 bg-yellow-500 text-slate-900 px-4 py-2 rounded-lg font-bold shadow-lg transform rotate-3">
-              Caso de éxito: Restaurante Luma
-            </div>
-
+            
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h3 className="font-bold text-xl">Reservas Automáticas</h3>

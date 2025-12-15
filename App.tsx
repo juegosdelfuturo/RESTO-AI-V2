@@ -13,7 +13,7 @@ function App() {
       <main className="flex-grow">
         <Hero />
         <Features />
-        <Stats />
+  
         <Pricing />
       </main>
       <Footer />

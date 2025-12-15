@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
-import { Send, Check, Loader2 } from 'lucide-react';
+import { Send, Check, Loader2, AlertCircle } from 'lucide-react';
 
 export const Pricing: React.FC = () => {
-  const [formState, setFormState] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [formState, setFormState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState('loading');
-    // Simulate API call
-    setTimeout(() => {
-      setFormState('success');
-    }, 1500);
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      // REEMPLAZA "https://formspree.io/f/tu_id_aqui" CON TU URL REAL DE FORMSPREE
+      // Ejemplo: https://formspree.io/f/mqaklzaz
+      const response = await fetch("https://formspree.io/f/tu_id_aqui", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setFormState('success');
+        form.reset();
+      } else {
+        setFormState('error');
+      }
+    } catch (error) {
+      setFormState('error');
+    }
   };
 
   return (
@@ -83,40 +103,53 @@ export const Pricing: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-slate-700">Nombre</label>
-                      <input required type="text" placeholder="Tu nombre" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <label htmlFor="nombre" className="text-sm font-semibold text-slate-700">Nombre</label>
+                      <input name="nombre" id="nombre" required type="text" placeholder="Tu nombre" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-slate-700">Apellido</label>
-                      <input required type="text" placeholder="Tu apellido" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <label htmlFor="apellido" className="text-sm font-semibold text-slate-700">Apellido</label>
+                      <input name="apellido" id="apellido" required type="text" placeholder="Tu apellido" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-slate-700">Restaurante</label>
-                    <input required type="text" placeholder="Nombre del local" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                    <label htmlFor="restaurante" className="text-sm font-semibold text-slate-700">Restaurante</label>
+                    <input name="restaurante" id="restaurante" required type="text" placeholder="Nombre del local" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-slate-700">Email</label>
-                      <input required type="email" placeholder="hola@restaurante.com" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <label htmlFor="email" className="text-sm font-semibold text-slate-700">Email</label>
+                      <input name="email" id="email" required type="email" placeholder="hola@restaurante.com" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-slate-700">Teléfono</label>
-                      <input required type="tel" placeholder="+34 600..." className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
+                      <label htmlFor="telefono" className="text-sm font-semibold text-slate-700">Teléfono</label>
+                      <input name="telefono" id="telefono" required type="tel" placeholder="+34 600..." className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-slate-700">Volumen Mensual</label>
-                    <select className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-slate-600">
-                      <option>Menos de 500 cubiertos</option>
-                      <option>500 - 2000 cubiertos</option>
-                      <option>Más de 2000 cubiertos</option>
-                      <option>Grupo / Franquicia</option>
-                    </select>
+                    <label htmlFor="volumen" className="text-sm font-semibold text-slate-700">Volumen Mensual</label>
+                    <div className="relative">
+                      <select name="volumen" id="volumen" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-slate-600 appearance-none">
+                        <option value="Menos de 500">Menos de 500 cubiertos</option>
+                        <option value="500 - 2000">500 - 2000 cubiertos</option>
+                        <option value="Más de 2000">Más de 2000 cubiertos</option>
+                        <option value="Grupo">Grupo / Franquicia</option>
+                      </select>
+                      {/* Arrow Icon */}
+                      <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </div>
+                    </div>
                   </div>
+
+                  {formState === 'error' && (
+                    <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm flex items-center gap-2">
+                      <AlertCircle size={16} />
+                      Error al enviar. Por favor, verifica tu conexión o configuración.
+                    </div>
+                  )}
 
                   <button 
                     type="submit" 
