@@ -129,13 +129,29 @@ export const Pricing: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="volumen" className="text-sm font-semibold text-slate-700">Volumen Mensual</label>
+                    <label htmlFor="volumen" className="text-sm font-semibold text-slate-700">Comensales Mensuales</label>
                     <div className="relative">
                       <select name="volumen" id="volumen" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-slate-600 appearance-none">
-                        <option value="Menos de 500">Menos de 500 cubiertos</option>
-                        <option value="500 - 2000">500 - 2000 cubiertos</option>
-                        <option value="Más de 2000">Más de 2000 cubiertos</option>
+                        <option value="Menos de 500">Menos de 500 comensales</option>
+                        <option value="500 - 2000">500 - 2000 comensales</option>
+                        <option value="Más de 2000">Más de 2000 comensales</option>
                         <option value="Grupo">Grupo / Franquicia</option>
+                      </select>
+                      {/* Arrow Icon */}
+                      <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="gasto" className="text-sm font-semibold text-slate-700">Gasto Promedio por Comensal</label>
+                    <div className="relative">
+                      <select name="gasto" id="gasto" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-slate-600 appearance-none">
+                        <option value="Menos de 20€">Menos de 20€</option>
+                        <option value="20€ - 45€">20€ - 45€</option>
+                        <option value="45€ - 70€">45€ - 70€</option>
+                        <option value="Más de 70€">Más de 70€</option>
                       </select>
                       {/* Arrow Icon */}
                       <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-500">
