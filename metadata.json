@@ -1,0 +1,7 @@
+{
+  "name": "RestoAI - Asistente de Restaurantes",
+  "description": "Plataforma de gestión de reservas y automatización telefónica para restaurantes impulsada por IA.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
